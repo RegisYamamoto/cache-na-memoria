@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.map.LRUMap;
 
+import com.regis.cachenamemoria.model.Campanha;
+
 public class CrunchifyInMemoryCache<K, T> {
 
 	private long timeToLive;
@@ -12,10 +14,10 @@ public class CrunchifyInMemoryCache<K, T> {
 
 	protected class CrunchifyCacheObject {
 		public long lastAccessed = System.currentTimeMillis();
-		public T value;
+		public Campanha value;
 
-		protected CrunchifyCacheObject(T value) {
-			this.value = value;
+		protected CrunchifyCacheObject(Campanha c1) {
+			this.value = c1;
 		}
 	}
 
@@ -42,17 +44,17 @@ public class CrunchifyInMemoryCache<K, T> {
 			t.start();
 		}
 	}
-
-	public void put(K key, T value) {
+	
+	public void put(long l, Campanha c1) {
 		synchronized (crunchifyCacheMap) {
-			crunchifyCacheMap.put(key, new CrunchifyCacheObject(value));
+			crunchifyCacheMap.put(l, new CrunchifyCacheObject(c1));
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public T get(K key) {
+	public Campanha get(int i) {
 		synchronized (crunchifyCacheMap) {
-			CrunchifyCacheObject c = (CrunchifyCacheObject) crunchifyCacheMap.get(key);
+			CrunchifyCacheObject c = (CrunchifyCacheObject) crunchifyCacheMap.get(i);
 
 			if (c == null)
 				return null;
